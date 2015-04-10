@@ -1,0 +1,26 @@
+#!/bin/bash
+echo "---updating and installing python library httplib2."
+sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get autoclean
+sudo apt-get install x11vnc -y chromium python-pip
+sudo pip install httplib2 PyVimeo
+echo "Downloading youtube api"
+cd ~/VidUploadServer/youtube
+./genseed
+
+#echo "Downloading vimeo api"
+#insecure
+#echo "Downloading dailymotion api"
+#in development
+
+echo "Setting up cronjobs to run the main loop."
+crontab -l > mycron
+echo "*/1 * * * * flock -n /var/run/runlock -c ~/VidUploadServer/VidUp.sh || flock -u /var/run/runlock" >> mycron
+crontab mycron
+rm mycron
+sudo crontab -l > mysudocron
+sudo echo "@reboot flock -n /var/run/runlock -c ~/VidUploadServer/VidUp.sh || flock -u /var/run/runlock" >> mysudocron
+sudo crontab mysudocron
+sudo rm mysudocron
+echo "Setting up your first channel."
+cd ~/VidUploadServer
+./NewChannel

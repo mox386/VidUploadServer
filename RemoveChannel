@@ -1,0 +1,15 @@
+#!/bin/bash
+echo "What is the name of this channel you want to remove?"
+read badchan
+echo "Are you absolutely sure you want to remove this channel from the system for good? It is possible to simply disable the channel by commenting it out n the channels file.   y/n"
+read sure
+if [ "$sure" == "y" ];
+then
+	echo "Obliterating every trace of this channel."
+else
+	exit 0
+fi
+sudo rm -r ~/VidUploadServer/*/$badchan
+cat channels | grep -vFx $badchan  >> channel
+mv channel channels
+echo "Finished removing $badchan from VidUploadServer."

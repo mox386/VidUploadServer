@@ -1,0 +1,14 @@
+#!/bin/bash
+cd ~/VidUploadServer/youtube
+mkdir seedchannel
+cp test.mp4 seedchannel/test.mp4
+cp authseed seedchannel/GoogAuth
+cd seedchannel
+chmod +x GoogAuth
+wget https://github.com/youtube/api-samples/raw/master/python/upload_video.py
+wget https://google-api-python-client.googlecode.com/files/google-api-python-client-1.2.tar.gz
+tar xzvf google-api-python-client-1.2.tar.gz
+rm google-api-python-client-1.2.tar.gz
+cd google-api-python-client-1.2
+mv apiclient oauth2client uritemplate ..
+cd ~/VidUploadServer

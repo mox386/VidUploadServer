@@ -1,0 +1,73 @@
+#!/bin/bash
+echo "What is the name of this channel?        Please don't use spaces, this name is for this script to identify the channels on this system. It must be the same as the folder you are using on the USB drive."
+read chn
+exists="$(cat channels | sed 1,2d | grep -w $chn)"
+if [ "$exists" == "$chn" ];
+then
+	echo "It appears that this channel already exists in the system. Please run RemoveChanel to remove it."
+	exit 0
+else
+	echo "Checked channels, we're good to go."
+fi
+echo -e "What hosting service is this channel on?\nSelect from:\n1 youtube\n2 vimeo\n3 dailymotion"
+read service
+if [ "$service" == "1" ];
+then
+        echo "Youtube VidUploalServer channel $chn being created."
+	cd ~/VidUploadServer/youtube
+	cp -r seedchannel $chn
+	echo "Grabbing Client_ID and Client_Secret from USB drive '.json' file in the $chn folder."
+	if [ ! -f "/media/*/$chn/*.json" ];
+	then
+		cd ~/VidUploadServer/youtube/
+		secret="$(cat /media/*/$chn/client_secret* | grep -o 'secret.*token_uri' | cut -c 10-33)"
+		id="$(cat /media/*/$chn/client_secret* | grep -o 'client_id.*auth_provider' | cut -c 13-84)"
+		sudo sed -e "3s/ID/$id/" client_secrets_example.json >> temp
+		sudo sed -e "4s/SECRET/$secret/" temp >> temp2
+		rm temp
+		sudo mv temp2 ~/VidUploadServer/youtube/$chn/client_secrets.json
+		cd $chn
+		sudo chmod 600 client_secrets.json
+		echo -e "Right now, the script is pulling the auth link. What is the auth link? A really long url that identifies you and that must be accepted for the Raspberry Pi upload server to be allowed to add files to your youtube channel, however we're on headless raspberry pi. There is no web browser. You have options. It is going to say authorization failed, but we'll still get the link.\nPress Enter"
+		python upload_video.py --file=test.mp4 --noauth_local_webserver > link
+		sudo killall -9 python
+		Sleep 75
+		cat link | grep google >> temp
+		mv temp link
+		echo -e "Options:\n1 Print out the link for copy paste into browser and copy paste the verification code into the command prompt from said browser. This works best if you are currently working on the computer you normally upload from and are logged into your youtube/google account in a separate window.\n2 Put the link file into the folder on your thumb drive for transport to the other computer.\n3 Not sure, both."
+		read linkt
+		if [ "$linkt" == 1 ];
+		then
+			echo "Great! this is the easiest/fastest way to get this done."
+			python upload_video.py --file=test.mp4 --noauth_local_webserver
+		elif [ "$linkt" == 2 ];
+		then
+			cp link /media/*/$chn/
+			echo "Let's say that this task takes you a day. For example, your raspberry pi is a county over from your home computer. Merely, run the GoogAuth script when you have the verification code."
+		elif [ "$linkt" == 3 ];
+		then
+			echo "Let's say that this task takes you a day. For example, your raspberry pi is a county over from your home computer. Merely, run the GoogAuth script when you have the  verification code."
+			cp link /media/*/$chn/
+			echo "If you want/need, you can ctrl+c out of this prompt"
+			python upload_video.py --file=test.mp4 --noauth_local_webserver
+		else
+			echo "You didn't pick an option. Doing both.\n\n\n"
+			echo "Let's say that this task takes you a day. For example, your raspberry pi is a county over from your home computer. Merely, run the GoogAuth script when you have the  verification code."
+			echo "The GoogAuth script is located in your channel folder, so you must be in your channel folder to run it."
+			cp link /media/*/$chn/
+			python upload_video.py --file=test.mp4 --noauth_local_webserver
+		fi
+	else
+		echo "Cannot find the 'client_secrets' file in the '$chn' directory on the USB drive. This could be because you named the folder differnently, or because its not plugged in. Exiting the script with a clean slate. Feel free to try again after you've solve the problem."
+		sudo rm -r $chn
+		exit 0
+	fi
+
+elif ["$service" == "2"];
+then
+	echo "Vimeo not supported at this time due to security flaw in api."
+elif ["$service" == "3"];
+then
+        echo "Daily Motion in development"
+fi
+echo "$chn" >> ~/VidUploadServer/channels
