@@ -47,6 +47,18 @@ To add secondary channels obtain the json file as above, run 'NewChannel', and g
 	cd ~/VidUploadServer
 	./NewChannel
 
+If you get interrupted in the process of verification, but did obtain the code run its okay. Run the GoogAuth script inside the channel folder. Then put the verification code in (<channel_name> should be replaced by your folder/channel name).
+
+	cd ~/VidUploadServer/youtube/<channel_name>
+	./GoogAuth
+
+If you are running from a standalone raspberry pi hooked up to a monitor, then you many not be able to copy/paste the verification code into the cli. 
+There is a slight trick to piping in the verification code into the command. Put the verification code into a file named 'verification' with nothing else in the file but the verification code. Put this file in the channel folder on the thumb drive and run this: (where <channel_name> is replaced by your folder/channel name)
+
+	cd ~/VidUploadServer/youtube/<channel_name>
+	cat /media/*/<channel_name>/verification* | ./GoogAuth
+
+Once verification is complete it will upload a simple video, if you would rather not wait for this video to complete it is okay to ctrl+c out and move on.
 
 #For Vimeo
 
