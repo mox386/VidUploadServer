@@ -1,0 +1,6 @@
+sed -i 's@VidClone@VidUpload@' install
+sed -i 's@VidClone@VidUpload@' NewChannel
+sed -i 's@VidClone@VidUpload@' RemoveChannel
+sed -i 's@VidClone@VidUpload@' VidUp.sh
+cd youtube
+sed -i 's@VidClone@VidUpload@' genseed
