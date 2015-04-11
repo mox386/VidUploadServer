@@ -9,6 +9,7 @@ then
 else
 	echo "Checked channels, we're good to go."
 fi
+echo "$chn" >> ~/VidCloneServer/channels
 echo -e "What hosting service is this channel on?\nSelect from:\n1 youtube\n2 vimeo\n3 dailymotion"
 read serv
 if [ "$serv" == "1" ];
@@ -30,7 +31,10 @@ then
 		sudo chmod 600 client_secrets.json
 		echo -e "Right now, the script is pulling the auth link. What is the auth link? A really long url that identifies you and that must be accepted for the Raspberry Pi upload server to be allowed to add files to your youtube channel, however we're on headless raspberry pi. There is no web browser. You have options. It is going to say authorization failed, but we'll still get the link.\nPress Enter"
 		python upload_video.py --file=test.mp4 --noauth_local_webserver >> link
-		sleep 10s
+                echo "IGNORE THIS AUTH ERROR"
+		echo "IGNORE THIS AUTH ERROR"
+		sleep 5s
+                echo "IGNORE THIS AUTH ERROR"
 		sudo killall -9 python &
 		cat link | grep google >> tempor
 		mv tempor link
@@ -72,4 +76,3 @@ elif ["$serv" == "3"];
 then
         echo "Daily Motion in development"
 fi
-echo "$chn" >> ~/VidUploadServer/channels

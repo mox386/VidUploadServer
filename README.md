@@ -60,13 +60,14 @@ There is a slight trick to piping in the verification code into the command. Put
 
 Once verification is complete it will upload a simple video, if you would rather not wait for this video to complete it is okay to ctrl+c out and move on.
 
-#For Vimeo
+#For vimeo
 
 Update: per Vimeo policy these scripts have been blocked.
 
-#For DailyMotion
+#For dailyMotion
 
 In Work
+
 
 
 #Disabling a channel
@@ -96,3 +97,5 @@ To remove a channel run the "RemoveChannel" script it will wash all traces of a 
 -Do Not name a channel the same name on two different hosting services even if they are the same name on those hosting services. Give them a slightly different name in VidUploadServer.
 
 -The script will not upload the same file twice, so if an upload gets interrupted or doesn't work you must rename the video file for it to work, or clear the upload from the history.
+
+-If a video filename is shorter than 10 characters it may not upload.
