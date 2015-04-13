@@ -10,7 +10,7 @@ while read i;do
 	cd ..
 	serv="$(basename "$PWD")"
 	#echo "$(date)     The channel for the this  upload is $i. $serv is the service for $i." >> ~/VidUploadServer/VidUp.log
-        for _file in /media/*/$i/*.mov /media/*/$i/*.mp4 /media/*/$i/*.flv /media/*/$i/*.avi; do
+        for _file in /media/usb/$i/*.mov /media/usb/$i/*.mp4 /media/usb/$i/*.flv /media/usb/$i/*.avi; do
 		#echo "$(date)     Uploading from $_file. If you see an '*' disregard nothing happened." >> ~/VidUploadServer/VidUp.log
 		cd /media/*
 		cd /media/*/$i
@@ -24,9 +24,10 @@ while read i;do
 			if [ $did = 0 ]; then
 				echo " $_file ------------------------------------------------"
 				if [ "$serv" == "youtube" ]; then
-					echo "$(date)     The youtube upload has begun for $_file." >> ~/VidUploadServer/VidUp.log
+					#echo "$(date)     The youtube upload has begun for $_file." >> ~/VidUploadServer/VidUp.log
+					cd ~/VidUploadServer/youtube/$i/
 					#Edit this to your liking
-                        	        python upload_video.py --file="$_file" --title="Temp" --description="Temp" --keywords="Temp" --category="22" --privacyStatus="private" --noauth_local_webserver
+					python upload_video.py --file="$_file" --title="Temp" --description="Temp" --keywords="Temp" --category="22" --privacyStatus="private" --noauth_local_webserver
                         	        echo "$_file" >> ~/VidUploadServer/uploaded_videos.log
 					echo "$(date)     $_file uploaded." >>  ~/VidUploadServer/VidUp.log
 					sleep 5s

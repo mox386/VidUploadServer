@@ -9,7 +9,7 @@ then
 else
 	echo "Checked channels, we're good to go."
 fi
-echo "$chn" >> ~/VidCloneServer/channels
+echo "$chn" >> ~/VidUploadServer/channels
 echo -e "What hosting service is this channel on?\nSelect from:\n1 youtube\n2 vimeo\n3 dailymotion"
 read serv
 if [ "$serv" == "1" ];
@@ -30,7 +30,7 @@ then
 		cd $chn
 		sudo chmod 600 client_secrets.json
 		echo -e "Right now, the script is pulling the auth link. What is the auth link? A really long url that identifies you and that must be accepted for the Raspberry Pi upload server to be allowed to add files to your youtube channel, however we're on headless raspberry pi. There is no web browser. You have options. It is going to say authorization failed, but we'll still get the link.\nPress Enter"
-		python upload_video.py --file=test.mp4 --noauth_local_webserver >> link
+		python upload_video.py --file=test.mp4 --privacyStatus="private" --noauth_local_webserver >> link
                 echo "IGNORE THIS AUTH ERROR"
 		echo "IGNORE THIS AUTH ERROR"
 		sleep 5s
@@ -43,7 +43,7 @@ then
 		if [ "$linkt" == 1 ];
 		then
 			echo "Great! this is the easiest/fastest way to get this done."
-			python upload_video.py --file=test.mp4 --noauth_local_webserver
+			python upload_video.py --file=test.mp4 --privacyStatus="private" --noauth_local_webserver
 		elif [ "$linkt" == 2 ];
 		then
 			cp link /media/*/$chn/
@@ -53,7 +53,7 @@ then
 			echo "Let's say that this task takes you a day. For example, your raspberry pi is a county over from your home computer. Merely, run the GoogAuth script when you have the  verification code."
 			cp link /media/*/$chn/
 			echo "If you want/need, you can ctrl+c out of this prompt"
-			python upload_video.py --file=test.mp4 --noauth_local_webserver
+			python upload_video.py --file=test.mp4 --privacyStatus="private" --noauth_local_webserver
 		else
 			echo "You didn't pick an option. Doing both."
                         echo " "
@@ -62,7 +62,7 @@ then
 			echo "Let's say that this task takes you a day. For example, your raspberry pi is a county over from your home computer. Merely, run the GoogAuth script when you have the  verification code."
 			echo "The GoogAuth script is located in your channel folder, so you must be in your channel folder to run it."
 			cp link /media/*/$chn/link.txt
-			python upload_video.py --file=test.mp4 --noauth_local_webserver
+			python upload_video.py --file=test.mp4 --privacyStatus="private" --noauth_local_webserver
 		fi
 	else
 		echo "Cannot find the 'client_secrets' file in the '$chn' directory on the USB drive. This could be because you named the folder differnently, or because its not plugged in. Exiting the script with a clean slate. Feel free to try again after you've solve the problem."

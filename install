@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "---updating and installing python library httplib2."
 sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get autoclean
-sudo apt-get install x11vnc -y chromium python-pip
+sudo apt-get install x11vnc -y chromium python-pip usbmount
 sudo pip install httplib2 PyVimeo nose
 echo "Downloading youtube api"
 cd ~/VidUploadServer/youtube
@@ -25,6 +25,4 @@ sudo crontab -l >> mysudocron
 sudo echo "@reboot flock -n /var/run/runlock -c ~/VidUploadServer/VidUp.sh || flock -u /var/run/runlock" >> mysudocron
 sudo crontab mysudocron
 sudo rm mysudocron
-echo "Setting up your first channel."
-cd ~/VidUploadServer
-./NewChannel
+echo "Finished with install. Please run NewChannel to setup your channels."

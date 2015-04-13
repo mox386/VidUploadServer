@@ -35,10 +35,13 @@ After this file is in the channel folder on the thumb drive. Plug it into the Ra
 developers move stuff around all the time) the file should contain a 'client_secret' that is 25 characters long and a 'client_id' that is 73 charaters long. 'client_id' should end with 
 apps.googleusercontent.conf'.
 
+After downloading the git (commands above) run the installation
+
 	cd ~/VidUploadServer
 	./install
 
-The script will give copious feedback on actions taken, and will go through the setup for the first channel.
+The install script will give copious feedback on actions taken, and will go through the setup.
+
 
 A link to a google consent webpage from step 6 above will be generated. However, since we are running a headless raspberry pi it will not display on the pi, copy paste, type, or otherwise move this authorization link to another computer where you can accept.
 
