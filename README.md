@@ -65,12 +65,20 @@ Once verification is complete it will upload a simple video, if you would rather
 
 #For vimeo
 
-Update: per Vimeo policy these scripts have been blocked.
+In Work
+
+        1.) login and go to https://developer.vimeo.com/apps/new
+        2.) Fill out the required fields with anything you like, and click create
+        3.) Click 'Request Upload Access' and fill out the form, there is an annoying 'please explain' field and it takes 5 business days to get approval/rejection
+
 
 #For dailyMotion
 
 In Work
 
+        1.) login and go to https://www.dailymotion.com/profile/developer
+        2.) Click 'Create a new API Key' and fill out the fields, in Callback URL paste this in "https://api.dailymotion.com/oauth/token"
+        3.) Wait a few seconds and refresh (F5)
 
 
 #Disabling a channel
