@@ -1,20 +1,25 @@
 #!/bin/bash
 echo "---updating and installing python library httplib2."
 sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get autoclean
-sudo apt-get install x11vnc -y chromium python-pip usbmount libcurl4-openssl-dev python-dev
-sudo pip install httplib2 PyVimeo nose numpy scipy pybrain pycurl
+sudo apt-get install x11vnc -y chromium python-pip libcurl4-openssl-dev python-dev
+sudo pip install httplib2 PyVimeo nose numpy scipy pybrain pycurl glob
+
 echo "Downloading youtube api"
 cd ~/VidUploadServer/youtube
 ./genseed
+
 #echo "Downloading vimeo api"
 #insecure
 #cd ~/VidUploadServer/vimeo
 #git clone https://github.com/vimeo/vimeo.php.git
-#echo "Downloading dailymotion api"
+
+echo "Downloading dailymotion api"
 cd ~/VidUploadServer/dailymotion
 git clone https://github.com/dailymotion/dailymotion-sdk-python.git
+cp DMup.py dailymotion-sdk-python
 cd dailymotion-sdk-python
 sudo python setup.py install
+
 echo "Setting up cronjobs to run the main loop."
 crontab -l >> mycron
 echo "*/1 * * * * flock -n /var/run/runlock -c ~/VidUploadServer/VidUp.sh || flock -u /var/run/runlock" >> mycron

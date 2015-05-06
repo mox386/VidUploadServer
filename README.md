@@ -12,6 +12,10 @@ Everything is intended to run from the "/home/pi/" folder and was developed on r
 	cd ~
 	git clone https://github.com/mox386/VidUploadServer.git
 
+To setup
+
+        cd ~/VidUploadServer
+        ./install
 
 Please don't use spaces in this folder/channel name. If your channel has a space in the name either replace the space with an underscore or remove the space. This folder name will be used to identify which 
 channel to upload various video files to which channels. So be careful to use the same name when the scripts ask you for input. 
@@ -31,26 +35,19 @@ Before running install. On the computer you normally upload via browser for your
 	8.) On the right, click 'Creat new Client ID'. The application type is 'Installed Application', select 'Other'.
 	9.) Download the json file and put it into a folder on the thumb drive named for the channel.
 
-After this file is in the channel folder on the thumb drive. Plug it into the Raspberry Pi and run the following commands. If you happen to have any doubts about the json file that you downloaded (because 
+After this file is in the channel folder on the thumb drive. Plug it into the Raspberry Pi and run the NewChannel command. If you happen to have any doubts about the json file that you downloaded (because 
 developers move stuff around all the time) the file should contain a 'client_secret' that is 25 characters long and a 'client_id' that is 73 charaters long. 'client_id' should end with 
 apps.googleusercontent.conf'.
-
-After downloading the git (commands above) run the installation
-
-	cd ~/VidUploadServer
-	./install
-
-The install script will give copious feedback on actions taken, and will go through the setup.
-
-
-A link to a google consent webpage from step 6 above will be generated. However, since we are running a headless raspberry pi it will not display on the pi, copy paste, type, or otherwise move this authorization link to another computer where you can accept.
-
-To add secondary channels obtain the json file as above, run 'NewChannel', and go through the consent link steps again.
 
 	cd ~/VidUploadServer
 	./NewChannel
 
-If you get interrupted in the process of verification, but did obtain the code run its okay. Run the GoogAuth script inside the channel folder. Then put the verification code in (<channel_name> should be replaced by your folder/channel name).
+A link to a google consent webpage from step 6 above will be generated. However, since we are running a headless raspberry pi it will not display on the pi, copy paste, type, or otherwise move this 
+authorization link to another computer where you can accept. Just in case you need the link, it will be placed in a file in the channel folder.
+
+The link will generate a verification code that needs to be pasted (or otherwise inserted) into the raspberry pi to confirm the authorization. If you get interrupted in the process of verification, 
+but did obtain the verification code its okay. Run the GoogAuth script inside the channel folder. Then put the verification code in (<channel_name> should be replaced by your folder/channel name on 
+the thumb drive).
 
 	cd ~/VidUploadServer/youtube/<channel_name>
 	./GoogAuth
@@ -68,18 +65,26 @@ Once verification is complete it will upload a simple video, if you would rather
 In Work
 
         1.) login and go to https://developer.vimeo.com/apps/new
-        2.) Fill out the required fields with anything you like, and click create
-        3.) Click 'Request Upload Access' and fill out the form, there is an annoying 'please explain' field and it takes 5 business days to get approval/rejection
-
+        2.) Fill out the required fields with anything you like, and click create 
+        3.) Click 'Request Upload Access' and fill out the form, there is an annoying 'please explain' field 
+	NOTE: It may take 5 business days to get approval/rejection
 
 #For dailyMotion
 
-In Work
+	1.) login and go to https://www.dailymotion.com/profile/developer
+	2.) Click 'Create a new API Key' and fill out the fields, in Callback URL paste this in "https://api.dailymotion.com/oauth/token"
+	3.) Wait a few seconds and refresh (F5)
 
-        1.) login and go to https://www.dailymotion.com/profile/developer
-        2.) Click 'Create a new API Key' and fill out the fields, in Callback URL paste this in "https://api.dailymotion.com/oauth/token"
-        3.) Wait a few seconds and refresh (F5)
+In order to access daily motion a config.py file needs to be put together. If you are typing in commands into the ssh terminal on a computer that has browser-login-access to your dailymotion account, 
+then you can copy/paste in the responses that will build the 'config.py'. The other option is to make the 'config.py' and place it in the channel folder on the thumb drive prior to setting up the
+channel.
 
+For information on the 'config.py' file see the bottom of the dailymotion SDK README https://github.com/dailymotion/dailymotion-sdk-python
+
+In order to setup the channel run the NewChannel command.
+
+        cd ~/VidUploadServer
+        ./NewChannel
 
 #Disabling a channel
 

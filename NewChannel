@@ -4,7 +4,7 @@ read chn
 exists="$(cat channels | sed 1,2d | grep -w $chn)"
 if [ "$exists" == "$chn" ];
 then
-	echo "It appears that this channel already exists in the system. Please run RemoveChanel to remove it."
+	echo "It appears that this channel already exists in the system. Please run RemoveChanel to remove it. Please do not name channels from different services the same name in VidUploadServer."
 	exit 0
 else
 	echo "Checked channels, we're good to go."
@@ -69,10 +69,67 @@ then
 		sudo rm -r $chn
 		exit 0
 	fi
-elif ["$serv" == "2"];
+elif [ "$serv" == "2" ];
 then
 	echo "Vimeo not supported at this time due to security flaw in api."
-elif ["$serv" == "3"];
+	exit
+
+elif [ "$serv" == "3" ];
 then
-        echo "Daily Motion in development"
+	cd ~/VidUploadServer/dailymotion/
+	echo "dailymotion VidUploadServer channel $chn being created."
+        cp -r dailymotion-sdk-python $chn
+        cd $chn
+	echo "This setup works best if you are working over an ssh tunnel and can copy paste in the ID, Key, username, etc."
+	echo "However, you may want to put the 'config.py' file together yourself."
+	echo " "
+	echo -e "Are you:\n\n1 ... Working over ssh, and want to copy/paste in the responses\n       OR\n2 ... Have a config.py file in the $chn folder on your thumb drive\n\nother selections will exit this setup."
+	read sshtun
+	if [ "$sshtun" == "1" ];
+	then
+		echo "dailymotion username"
+		read usern
+		echo "dailymotion password"
+		read -s pswd
+		echo "Paste in the api key"
+		read api_key
+		echo "Paste in the api secret"
+		read api_secret
+		sudo cat >> ~/VidUploadServer/dailymotion/$chn/config.py << EOF
+CLIENT_ID = '$api_key'
+CLIENT_SECRET = '$api_secret'
+USERNAME = '$usern'
+PASSWORD = '$pswd'
+REDIRECT_URI = 'https://api.dailymotion.com/oauth/token'
+BASE_URL = 'https://api.dailymotion.com'
+OAUTH_AUTHORIZE_URL = 'https://www.dailymotion.com/oauth/authorize'
+OAUTH_TOKEN_URL = 'https://api.dailymotion.com/oauth/token'
+EOF
+		sudo chmod 600 ~/VidUploadServer/*/$chn/config.py
+	elif [ "$sshtun" == "2" ];
+	then
+		echo "copying the config.py file from the thumb drive."
+		cp /media/*/$chn/config.py ~/VidUploadServer/dailymotion/$chn/config.py
+		sudo chmod 600 ~/VidUploadServer/*/$chn/config.py
+	else
+		sudo rm -r ~/VidUploadServer/*/$chn
+		cd ~/VidUploadServer
+		cat channels | grep -vFx $chn  >> channel
+		mv channel channels
+		echo "exiting and undoing the channel creation"
+		exit 0
+	fi
+        cd ~/VidUploadServer/dailymotion/$chn
+	echo "This next command will test the connection."
+	nosetests
+	sleep 5
+	cd ~
+	mv .dailymotion_sdk_session_default .dailymotion_sdk_session_default.db
+	mv .dailymotion_sdk_session_$usern .dailymotion_sdk_session_$usern.db
+	nosetests -v
+
+else
+	echo "Not an option, please pick from appropriate options, exiting."
+	exit 0
 fi
+echo "Finished creating upload channel $chn."

@@ -1,0 +1,8 @@
+CLIENT_ID = '[YOUR API KEY]'
+CLIENT_SECRET = '[YOUR API SECRET]'
+USERNAME = '[YOUR USERNAME]'
+PASSWORD = '[YOUR PASSWORD]'
+REDIRECT_URI = '[YOUR REDIRECT URI]'
+BASE_URL = 'https://api.dailymotion.com'
+OAUTH_AUTHORIZE_URL = 'https://www.dailymotion.com/oauth/authorize'
+OAUTH_TOKEN_URL = 'https://api.dailymotion.com/oauth/token'
