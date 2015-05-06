@@ -120,9 +120,9 @@ To remove a channel run the "RemoveChannel" script it will wash all traces of a 
 
 #Notes:
 
--Vimeo currently in work
+-Vimeo woring as of 5/6/2015
 
--DailyMotion currently in work
+-DailyMotion working as of 5/5/2015
 
 -Youtube working as of 4/9/2015
 
@@ -130,4 +130,4 @@ To remove a channel run the "RemoveChannel" script it will wash all traces of a 
 
 -The script will not upload the same file twice, so if an upload gets interrupted or doesn't work you must rename the video file for it to work, or clear the upload from the history.
 
--If a video filename is shorter than 10 characters it may not upload.
+-If a video filename is shorter than 7 characters it may not upload.
