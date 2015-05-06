@@ -1,0 +1,5 @@
+CLIENT_ID = '[YOUR API KEY]'
+CLIENT_SECRET = '[YOUR API SECRET]'
+TOKEN = '[YOUR AUTHENTICATED BEARER TOKEN]'
+OAUTH_AUTHORIZE_URL = 'https://api.vimeo.com/oauth/authorize'
+OAUTH_TOKEN_URL = 'https://api.vimeo.com/oauth/access_token'

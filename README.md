@@ -14,8 +14,8 @@ Everything is intended to run from the "/home/pi/" folder and was developed on r
 
 To setup
 
-        cd ~/VidUploadServer
-        ./install
+	cd ~/VidUploadServer
+	./install
 
 Please don't use spaces in this folder/channel name. If your channel has a space in the name either replace the space with an underscore or remove the space. This folder name will be used to identify which 
 channel to upload various video files to which channels. So be careful to use the same name when the scripts ask you for input. 
@@ -64,27 +64,43 @@ Once verification is complete it will upload a simple video, if you would rather
 
 In Work
 
-        1.) login and go to https://developer.vimeo.com/apps/new
-        2.) Fill out the required fields with anything you like, and click create 
-        3.) Click 'Request Upload Access' and fill out the form, there is an annoying 'please explain' field 
+	1.) login and go to https://developer.vimeo.com/apps/new
+	2.) Fill out the required fields with anything you like, and click create 
+	3.) Click 'Request Upload Access' and fill out the form, there is an annoying 'please explain' field 
 	NOTE: It may take 5 business days to get approval/rejection
+	4.) Once approved, got to https://developer.vimeo.com/apps and select the app
+	5.) Click on Authentication
+	6.) On the bottom check the 'Upload' box and click 'Generate Token'
+	NOTE: DO NOT navigate away or the Access token will disappear and you will need to generate another.
 
-#For dailyMotion
-
-	1.) login and go to https://www.dailymotion.com/profile/developer
-	2.) Click 'Create a new API Key' and fill out the fields, in Callback URL paste this in "https://api.dailymotion.com/oauth/token"
-	3.) Wait a few seconds and refresh (F5)
-
-In order to access daily motion a config.py file needs to be put together. If you are typing in commands into the ssh terminal on a computer that has browser-login-access to your dailymotion account, 
+In order to access vimeo a config.py file needs to be put together. If you are typing in commands into the ssh terminal on a computer that has browser-login-access to your vimeo account,
 then you can copy/paste in the responses that will build the 'config.py'. The other option is to make the 'config.py' and place it in the channel folder on the thumb drive prior to setting up the
 channel.
 
-For information on the 'config.py' file see the bottom of the dailymotion SDK README https://github.com/dailymotion/dailymotion-sdk-python
+For information on 'config.py' look at the /vimeo/config.py.example file.
 
 In order to setup the channel run the NewChannel command.
 
         cd ~/VidUploadServer
         ./NewChannel
+
+
+#For dailymotion
+
+	1.) login and go to https://www.dailymotion.com/profile/developer
+	2.) Click 'Create a new API Key' and fill out the fields, in Callback URL paste this in "https://api.dailymotion.com/oauth/token"
+	3.) Wait a few seconds and refresh (F5)
+
+In order to access dailymotion a config.py file needs to be put together. If you are typing in commands into the ssh terminal on a computer that has browser-login-access to your dailymotion account, 
+then you can copy/paste in the responses that will build the 'config.py'. The other option is to make the 'config.py' and place it in the channel folder on the thumb drive prior to setting up the
+channel.
+
+For information on 'config.py' look at the /dailymotion/config.py.example file, or see the bottom of the dailymotion SDK README https://github.com/dailymotion/dailymotion-sdk-python
+
+In order to setup the channel run the NewChannel command.
+
+	cd ~/VidUploadServer
+	./NewChannel
 
 #Disabling a channel
 

@@ -8,10 +8,9 @@ echo "Downloading youtube api"
 cd ~/VidUploadServer/youtube
 ./genseed
 
-#echo "Downloading vimeo api"
-#insecure
-#cd ~/VidUploadServer/vimeo
-#git clone https://github.com/vimeo/vimeo.php.git
+echo "Downloading vimeo api"
+cd ~/VidUploadServer/vimeo
+git clone https://github.com/vimeo/vimeo.php.git
 
 echo "Downloading dailymotion api"
 cd ~/VidUploadServer/dailymotion

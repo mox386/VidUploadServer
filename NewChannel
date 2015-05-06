@@ -71,8 +71,52 @@ then
 	fi
 elif [ "$serv" == "2" ];
 then
-	echo "Vimeo not supported at this time due to security flaw in api."
-	exit
+	cd ~/VidUploadServer/vimeo/
+        echo "vimeo VidUploadServer channel $chn being created."
+	mkdir $chn
+	cp VMup.py $chn
+        echo "This setup works best if you are working over an ssh tunnel and can copy paste in the ID, Key, username, etc."
+        echo "However, you may want to put the 'config.py' file together yourself."
+        echo " "
+        echo -e "Are you:\n\n1 ... Working over ssh, and want to copy/paste in the responses\n       OR\n2 ... Have a config.py file in the $chn folder on your thumb drive\n\nother selections will exit this setup"
+        read sshtun
+        if [ "$sshtun" == "1" ];
+        then
+                echo "Paste in the Client Identifier"
+                read api_key
+                echo "Paste in the Client Secrets"
+                read api_secret
+		echo "Paste in the Generated Access Token"
+		read token
+                sudo cat >> ~/VidUploadServer/vimeo/$chn/config.py << EOF
+CLIENT_ID = '$api_key'
+CLIENT_SECRET = '$api_secret'
+TOKEN = '$token'
+OAUTH_AUTHORIZE_URL = 'https://api.vimeo.com/oauth/authorize'
+OAUTH_TOKEN_URL = 'https://api.vimeo.com/oauth/access_token'
+EOF
+                sudo chmod 600 ~/VidUploadServer/*/$chn/config.py
+        elif [ "$sshtun" == "2" ];
+        then
+                echo "copying the config.py file from the thumb drive."
+                cp /media/*/$chn/config.py ~/VidUploadServer/vimeo/$chn/config.py
+                sudo chmod 600 ~/VidUploadServer/*/$chn/config.py
+        else
+                sudo rm -r ~/VidUploadServer/*/$chn
+                cd ~/VidUploadServer
+                cat channels | grep -vFx $chn  >> channel
+                mv channel channels
+                echo "exiting and undoing the channel creation"
+                exit 0
+        fi
+        cd ~/VidUploadServer/vimeo/$chn
+        #echo "This next command will test the connection."
+        #nosetests
+        #sleep 5
+        #cd ~
+        #mv .dailymotion_sdk_session_default .dailymotion_sdk_session_default.db
+        #mv .dailymotion_sdk_session_$usern .dailymotion_sdk_session_$usern.db
+        #nosetests -v
 
 elif [ "$serv" == "3" ];
 then

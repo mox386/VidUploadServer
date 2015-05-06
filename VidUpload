@@ -8,3 +8,6 @@ sed -i 's@VidClone@VidUpload@' genseed
 cd ..
 cd dailymotion
 sed -i 's@VidClone@VidUpload@' DMup.py
+cd ..
+cd vimeo
+sed -i 's@VidClone@VidUpload@' VMup.py
