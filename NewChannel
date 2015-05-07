@@ -170,6 +170,7 @@ EOF
 	cd ~
 	mv .dailymotion_sdk_session_default .dailymotion_sdk_session_default.db
 	mv .dailymotion_sdk_session_$usern .dailymotion_sdk_session_$usern.db
+	cd ~/VidUploadServer/dailymotion/$chn
 	nosetests -v
 
 else
